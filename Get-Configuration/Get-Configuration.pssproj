@@ -25,8 +25,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <ItemGroup />
   <ItemGroup>
+    <Folder Include="Managers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Managers\SqlManager.ps1" />
+    <Compile Include="Managers\XmlManager.ps1" />
     <Compile Include="Get-Configuration.psd1" />
     <Compile Include="Get-Configuration.psm1" />
     <Compile Include="Get-Configuration.tests.ps1" />
