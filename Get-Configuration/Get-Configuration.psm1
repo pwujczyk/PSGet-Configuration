@@ -1,3 +1,4 @@
+. ($PSScriptRoot + "\Managers\Core.ps1")
 . ($PSScriptRoot + "\Managers\XmlManager.ps1")
 . ($PSScriptRoot + "\Managers\SqlManager.ps1")
 
@@ -31,12 +32,14 @@ function Get-Configuration()
 
     if ($configuration.Mode -eq 'SQL')
 	{
-        $SqlServerInstance=$configuration.SqlServerInstance
-        $SqlServerDatabase=$configuration.SqlServerDatabase
-        $SqlServerTable=$configuration.SqlServerTable
+        	$SqlServerInstance=$configuration.SqlServerInstance
+        	$SqlServerDatabase=$configuration.SqlServerDatabase
+        	$SqlServerTable=$configuration.SqlServerTable
+		$SqlServerSchema=$configuration.SqlServerSchema
 		
-		$r=GetSQLValue -SqlInstance $SqlServerInstance -DatabaseName $SqlServerDatabase -TableName $SqlServerTable -Key $Key
-        return $r
+		$r=GetSQLValue -SqlInstance $SqlServerInstance -DatabaseName $SqlServerDatabase  $SqlServerSchema -TableName $SqlServerTable -Key $Key
+		$value=$r.Value
+        	return $value
 	}
 }
 
@@ -55,17 +58,23 @@ function Set-Configuration()
 
     if ($configuration.Mode -eq 'SQL')
 	{
-        $SqlServerInstance=$configuration.SqlServerInstance
-        $SqlServerDatabase=$configuration.SqlServerDatabase
-        $SqlServerTable=$configuration.SqlServerTable
+        	$SqlServerInstance=$configuration.SqlServerInstance
+        	$SqlServerDatabase=$configuration.SqlServerDatabase
+        	$SqlServerTable=$configuration.SqlServerTable
+		$SqlServerSchema=$configuration.SqlServerSchema
 		
-		SetSQLValue -SqlInstance $SqlServerInstance -DatabaseName $SqlServerDatabase -TableName $SqlServerTable -Key $Key -Value $Value
+		SetSQLValue -SqlInstance $SqlServerInstance -DatabaseName $SqlServerDatabase -SchemaName $SqlServerSchema -TableName $SqlServerTable -Key $Key -Value $Value
 	}
 }
 
-
+function Get-ConfigurationSource()
+{
+	$config=GetConfiguration
+	Write-Host $config
+}
 
 Export-ModuleMember Get-Configuration
 Export-ModuleMember Set-Configuration
 Export-ModuleMember Set-SqlConfigurationSource
 Export-ModuleMember Set-XmlConfigurationSource
+Export-ModuleMember Get-ConfigurationSource

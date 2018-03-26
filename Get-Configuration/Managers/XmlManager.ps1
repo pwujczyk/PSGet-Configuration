@@ -23,6 +23,11 @@ function Set-XmlConfigurationSource()
     [cmdletbinding()]
 	param ([string]$ConfigurationPath)
 
+	if ( (Get-Item $ConfigurationPath) -is [System.IO.DirectoryInfo])
+	{
+		$ConfigurationPath=$ConfigurationPath+ $(GetFileName)
+	}
+
 	$Object = New-Object PSObject                                       
     $Object | add-member Noteproperty Mode       "Xml"                 
     $Object | add-member Noteproperty XmlPath   "$ConfigurationPath"

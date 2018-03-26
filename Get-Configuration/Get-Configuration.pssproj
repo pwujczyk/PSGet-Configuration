@@ -29,6 +29,7 @@
     <Folder Include="Managers\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Managers\Core.ps1" />
     <Compile Include="Managers\SqlManager.ps1" />
     <Compile Include="Managers\XmlManager.ps1" />
     <Compile Include="Get-Configuration.psd1" />
