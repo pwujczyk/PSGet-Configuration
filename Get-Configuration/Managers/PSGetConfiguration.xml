@@ -1,4 +1,4 @@
 <Configuration>
-  <conf key="Example" value="Exfsafsaample" />
-  <conf key="pawel" value="ddd" />
+  <conf key="ExampleKey" value="ExampleValue" />
+  <conf key="key" value="Value123" />
 </Configuration>

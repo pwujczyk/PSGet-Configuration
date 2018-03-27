@@ -70,7 +70,7 @@ function Set-Configuration()
 function Get-ConfigurationSource()
 {
 	$config=GetConfiguration
-	Write-Host $config
+	return $config
 }
 
 Export-ModuleMember Get-Configuration
