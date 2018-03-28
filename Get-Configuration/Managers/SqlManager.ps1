@@ -16,6 +16,7 @@ function CheckAndCreateTable([string]$SqlServerInstance,[string]$SqlServerDataba
 			New-SQLTable -SqlInstance $SqlServerInstance -DatabaseName $SqlServerDatabase -SchemaName $SqlServerSchema -TableName $SqlServerTable
 			New-SqlColumn -SqlInstance $SqlServerInstance -DatabaseName $SqlServerDatabase -SchemaName $SqlServerSchema -TableName $SqlServerTable -ColumnName "Key" -Type "VARCHAR(100)"
 			New-SqlColumn -SqlInstance $SqlServerInstance -DatabaseName $SqlServerDatabase -SchemaName $SqlServerSchema -TableName $SqlServerTable -ColumnName "Value" -Type "VARCHAR(1000)"
+			New-SqlColumn -SqlInstance $SqlServerInstance -DatabaseName $SqlServerDatabase -SchemaName $SqlServerSchema -TableName $SqlServerTable -ColumnName "Category" -Type "VARCHAR(1000)"
 		}
 	}
 }
@@ -52,15 +53,15 @@ function GetSQLValue()
 function SetSQLValue()
 {
     [cmdletbinding()]
-    param ([string]$SqlInstance,[string]$DatabaseName,[string]$SchemaName, [string]$TableName,[string]$Key,[string]$Value)
+    param ([string]$SqlInstance,[string]$DatabaseName,[string]$SchemaName, [string]$TableName,[string]$Key,[string]$Value,[string]$category)
     
     $currentValue=GetSQLValue -SqlInstance $SqlInstance -DatabaseName $DatabaseName -SchemaName $SchemaName -TableName $TableName -Key $Key
     if ($currentValue -eq $null) {
-        $query="INSERT INTO [$SchemaName].[$TableName]([Key],[Value]) VALUES('$Key','$Value')"
+        $query="INSERT INTO [$SchemaName].[$TableName]([Key],[Value],[Category]) VALUES('$Key','$Value','$category')"
         $result=Invoke-SQLQuery -SqlInstance $SqlInstance -DatabaseName $DatabaseName -Query $query	-Verbose:$VerbosePreference
     }
     else {
-        $query="UPDATE [$SchemaName].[$TableName] SET [Value] ='$Value' WHERE [Key]='$Key'"     
+        $query="UPDATE [$SchemaName].[$TableName] SET [Value] ='$Value',[Category]='$category' WHERE [Key]='$Key'"     
         $result=Invoke-SQLQuery -SqlInstance $SqlInstance -DatabaseName $DatabaseName -Query $query	-Verbose:$VerbosePreference
     }
 }
