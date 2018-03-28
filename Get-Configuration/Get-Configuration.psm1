@@ -46,14 +46,14 @@ function Get-Configuration()
 function Set-Configuration()
 {
 	[cmdletbinding()]
-	param ([string]$Key,[string]$Value)
+	param ([string]$Key,[string]$Value,[string]$category)
 		
 	$configuration=GetConfiguration
 	Write-Verbose $configuration
 	if ($configuration.Mode -eq 'Xml')
 	{
 		$path=$configuration.XmlPath 
-		$r=SetXmlValue $path $Key $Value
+		$r=SetXmlValue $path $Key $Value $category
 	}
 
     if ($configuration.Mode -eq 'SQL')
@@ -63,7 +63,7 @@ function Set-Configuration()
         	$SqlServerTable=$configuration.SqlServerTable
 		$SqlServerSchema=$configuration.SqlServerSchema
 		
-		SetSQLValue -SqlInstance $SqlServerInstance -DatabaseName $SqlServerDatabase -SchemaName $SqlServerSchema -TableName $SqlServerTable -Key $Key -Value $Value
+		SetSQLValue -SqlInstance $SqlServerInstance -DatabaseName $SqlServerDatabase -SchemaName $SqlServerSchema -TableName $SqlServerTable -Key $Key -Value $Value -Category $category
 	}
 }
 

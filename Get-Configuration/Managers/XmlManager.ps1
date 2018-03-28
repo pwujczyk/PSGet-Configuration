@@ -65,7 +65,7 @@ function Get-XmlConfiguration([string] $configPath, [string] $key)
 	}
 }
 
-function SetXmlValue([string] $configPath, [string] $key, [string]$value)
+function SetXmlValue([string] $configPath, [string] $key, [string]$value, [string]$category)
 {
 	if ($configPath -ne "")
 	{
@@ -75,6 +75,7 @@ function SetXmlValue([string] $configPath, [string] $key, [string]$value)
 		if ($x -ne $null)
 		{
 			$x.value=$value
+			$x.Category=$category
 			$file.Save($configPath)
 		}
 		else {
@@ -82,6 +83,7 @@ function SetXmlValue([string] $configPath, [string] $key, [string]$value)
 			$child = $file.CreateElement("conf")
 			$child.SetAttribute("key","$key")
 			$child.SetAttribute("value","$value")
+			$child.SetAttribute("category","$category")
 			$file.configuration.AppendChild($child)
 			$file.Save($configPath)
 		}
@@ -93,7 +95,7 @@ function CreateFile([string]$configPath)
 {
 	$configFile='
 <Configuration>
-	<conf key="ExampleKey" value="ExampleValue" />
+	<conf key="ExampleKey" value="ExampleValue" category="ExampleCategory" />
 </Configuration>'
 	$configFile |Out-File $configPath
 }
