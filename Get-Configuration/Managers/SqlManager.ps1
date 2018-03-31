@@ -65,3 +65,23 @@ function SetSQLValue()
         $result=Invoke-SQLQuery -SqlInstance $SqlInstance -DatabaseName $DatabaseName -Query $query	-Verbose:$VerbosePreference
     }
 }
+
+
+function ClearConfigurationByKeySQL()
+{
+	[cmdletbinding()]
+    param ([string]$SqlInstance,[string]$DatabaseName,[string]$SchemaName, [string]$TableName,[string]$Key,[string]$Value,[string]$Key)
+
+	  $query="DELETE [$SchemaName].[$TableName] WHERE [Key]='$Key'"
+      $result=Invoke-SQLQuery -SqlInstance $SqlInstance -DatabaseName $DatabaseName -Query $query	-Verbose:$VerbosePreference
+
+}
+
+function ClearConfigurationByCategoryXml()
+{
+	[cmdletbinding()]
+    param ([string]$SqlInstance,[string]$DatabaseName,[string]$SchemaName, [string]$TableName,[string]$Key,[string]$Value,[string]$Category)
+
+	  $query="DELETE [$SchemaName].[$TableName] WHERE [Category]='$Category'"
+      $result=Invoke-SQLQuery -SqlInstance $SqlInstance -DatabaseName $DatabaseName -Query $query	-Verbose:$VerbosePreference
+}

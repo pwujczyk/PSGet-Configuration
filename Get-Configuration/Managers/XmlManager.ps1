@@ -50,12 +50,19 @@ function GetXMLValue([string]$configPath, [string]$key)
 	$result=Get-XmlConfiguration $configPath $key
     return $result
 }
+
+function GetXML([string] $configPath)
+{
+	Write-Verbose $configPath
+	[xml]$file =Get-Content -Path $configPath
+	return $file
+}
+
 function Get-XmlConfiguration([string] $configPath, [string] $key)
 {
 	if ($configPath -ne "")
 	{
-		Write-Verbose $configPath
-		[xml]$file =Get-Content -Path $configPath
+		$file = GetXML $configPath
 		#Write-host $userfile
 		$x=$file.SelectSingleNode("/Configuration/conf[@key='$key']")
 		if ($x -ne $null)
@@ -98,4 +105,24 @@ function CreateFile([string]$configPath)
 	<conf key="ExampleKey" value="ExampleValue" category="ExampleCategory" />
 </Configuration>'
 	$configFile |Out-File $configPath
+}
+
+function ClearConfigurationByKeyXml([string]$configPath, [string]$key)
+{
+	$file = GetXML $configPath
+	$node=$file.SelectSingleNode("/Configuration/conf[@key='$key']")
+	$node.ParentNode.RemoveChild($node);
+	$file.Save($configPath)
+}
+
+function ClearConfigurationByCategoryXml([string]$configPath, [string]$category)
+{
+	$file = GetXML $configPath
+	$node=$file.SelectSingleNode("/Configuration/conf[@Category='$category']")
+	while ($node -ne $null)
+	{
+		$node.ParentNode.RemoveChild($node);
+		$node=$file.SelectSingleNode("/Configuration/conf[@Category='$category']")
+	}
+	$file.Save($configPath)
 }

@@ -34,7 +34,6 @@
     <Compile Include="Managers\XmlManager.ps1" />
     <Compile Include="Get-Configuration.psd1" />
     <Compile Include="Get-Configuration.psm1" />
-    <Compile Include="Get-Configuration.tests.ps1" />
     <Compile Include="Runner.ps1" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

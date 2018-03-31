@@ -1,4 +1,5 @@
 <Configuration>
   <conf key="ExampleKey" value="ExampleValue" />
   <conf key="key" value="Value123" />
+  <conf key="ke" value="v" category="" />
 </Configuration>
