@@ -27,14 +27,14 @@ function Get-Configuration()
 	{
 		$path=$configuration.XmlPath 
 		$r=GetXmlValue $path $Key
-        	return $r
+        return $r
 	}
 
-    	if ($configuration.Mode -eq 'SQL')
+    if ($configuration.Mode -eq 'SQL')
 	{
-        	$SqlServerInstance=$configuration.SqlServerInstance
-        	$SqlServerDatabase=$configuration.SqlServerDatabase
-        	$SqlServerTable=$configuration.SqlServerTable
+        $SqlServerInstance=$configuration.SqlServerInstance
+        $SqlServerDatabase=$configuration.SqlServerDatabase
+        $SqlServerTable=$configuration.SqlServerTable
 		$SqlServerSchema=$configuration.SqlServerSchema
 		
 	 	$r=GetSQLValue -SqlInstance $SqlServerInstance -DatabaseName $SqlServerDatabase  $SqlServerSchema -TableName $SqlServerTable -Key $Key
@@ -58,8 +58,8 @@ function Set-Configuration()
 
     if ($configuration.Mode -eq 'SQL')
 	{
-        $SqlServerInstance=$configuration.SqlServerInstance
-        $SqlServerDatabase=$configuration.SqlServerDatabase
+       	$SqlServerInstance=$configuration.SqlServerInstance
+       	$SqlServerDatabase=$configuration.SqlServerDatabase
         $SqlServerTable=$configuration.SqlServerTable
 		$SqlServerSchema=$configuration.SqlServerSchema
 		
@@ -82,13 +82,14 @@ function ClearConfigurationByKey()
 	Write-Verbose $configuration
 	if ($configuration.Mode -eq 'Xml')
 	{
-		ClearConfigurationByKeyXml
+		$path=$configuration.XmlPath 
+		ClearConfigurationByKeyXml $path $Key
 	}
 
-     if ($configuration.Mode -eq 'SQL')
+    if ($configuration.Mode -eq 'SQL')
 	{
 		$SqlServerInstance=$configuration.SqlServerInstance
-        $SqlServerDatabase=$configuration.SqlServerDatabase
+       	$SqlServerDatabase=$configuration.SqlServerDatabase
         $SqlServerTable=$configuration.SqlServerTable
 		$SqlServerSchema=$configuration.SqlServerSchema
 		ClearConfigurationByKeySQL -SqlInstance $SqlServerInstance -DatabaseName $SqlServerDatabase -SchemaName $SqlServerSchema -TableName $SqlServerTable -Key $Key
@@ -104,16 +105,18 @@ function ClearConfigurationByCategory()
 	Write-Verbose $configuration
 	if ($configuration.Mode -eq 'Xml')
 	{
-		ClearConfigurationByCategoryXml $Category
+		$path=$configuration.XmlPath 
+		ClearConfigurationByCategoryXml $path $Category
 	}
 
-	if ($configuration.Mode -eq 'SQL')
+    if ($configuration.Mode -eq 'SQL')
 	{
 		$SqlServerInstance=$configuration.SqlServerInstance
-        $SqlServerDatabase=$configuration.SqlServerDatabase
+       	$SqlServerDatabase=$configuration.SqlServerDatabase
         $SqlServerTable=$configuration.SqlServerTable
 		$SqlServerSchema=$configuration.SqlServerSchema
-		ClearConfigurationByKeyCategory -SqlInstance $SqlServerInstance -DatabaseName $SqlServerDatabase -SchemaName $SqlServerSchema -TableName $SqlServerTable -Category $Category
+
+		ClearConfigurationByCategorySQL -SqlInstance $SqlServerInstance -DatabaseName $SqlServerDatabase -SchemaName $SqlServerSchema -TableName $SqlServerTable -Category $category
 	}
 }
 
@@ -122,12 +125,12 @@ function Clear-Configuration()
 	[cmdletbinding()]
 	param ([string]$Key,[string]$Category)
 	
-	if($Key -ne $null)
+	if($Key -ne $null -and $Key -ne "")
 	{
 		ClearConfigurationByKey $Key
 	}
 	
-	if ($category -ne $null)
+	if ($Category -ne $null -and $Category -ne "")
 	{
 		ClearConfigurationByCategory $Category
 	}

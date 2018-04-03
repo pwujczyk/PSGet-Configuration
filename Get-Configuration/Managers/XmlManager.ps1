@@ -118,11 +118,11 @@ function ClearConfigurationByKeyXml([string]$configPath, [string]$key)
 function ClearConfigurationByCategoryXml([string]$configPath, [string]$category)
 {
 	$file = GetXML $configPath
-	$node=$file.SelectSingleNode("/Configuration/conf[@Category='$category']")
+	$node=$file.SelectSingleNode("/Configuration/conf[@category='$category']")
 	while ($node -ne $null)
 	{
 		$node.ParentNode.RemoveChild($node);
-		$node=$file.SelectSingleNode("/Configuration/conf[@Category='$category']")
+		$node=$file.SelectSingleNode("/Configuration/conf[@category='$category']")
 	}
 	$file.Save($configPath)
 }
