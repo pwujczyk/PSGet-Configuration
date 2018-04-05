@@ -26,6 +26,7 @@ function Set-SqlConfigurationSource()
     [cmdletbinding()]
 	param ([string]$SqlServerInstance,[string]$SqlServerDatabase,[string]$SqlServerSchema="dbo",[string]$SqlServerTable)
 
+	CheckAndCreateTable -SqlServerInstance $SqlServerInstance -SqlServerDatabase $SqlServerDatabase -SqlServerSchema $SqlServerSchema -SqlServerTable $SqlServerTable
 
 	$Object = New-Object PSObject                                       
     $Object | add-member Noteproperty Mode       "SQL"                 

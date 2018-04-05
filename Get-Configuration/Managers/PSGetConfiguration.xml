@@ -1,5 +1,4 @@
 <Configuration>
-  <conf key="ExampleKey" value="ExampleValue" />
-  <conf key="key" value="Value123" />
-  <conf key="ke" value="v" category="" />
+  <conf key="ExampleKey" value="ExampleValue" category="ExampleCategory" />
+  <conf key="StartAppplicationDirectory" value="D:\GitHub\PSStart-Application\Start-Application\StartApplication.xml" category="" />
 </Configuration>

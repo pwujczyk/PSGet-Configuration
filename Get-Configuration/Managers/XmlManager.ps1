@@ -23,6 +23,8 @@ function Set-XmlConfigurationSource()
     [cmdletbinding()]
 	param ([string]$ConfigurationPath)
 
+	CreateFileIfNotExists $ConfigurationPath
+
 	if ( (Get-Item $ConfigurationPath) -is [System.IO.DirectoryInfo])
 	{
 		$ConfigurationPath=$ConfigurationPath+ $(GetFileName)
@@ -32,8 +34,11 @@ function Set-XmlConfigurationSource()
     $Object | add-member Noteproperty Mode       "Xml"                 
     $Object | add-member Noteproperty XmlPath   "$ConfigurationPath"
 	$conf=ConvertTo-Json -InputObject $Object
-	SetConfiguration $conf
+	SetConfiguration $conf	
+}
 
+function CreateFileIfNotExists($ConfigurationPath)
+{
 	if ( $(Test-Path $ConfigurationPath) -eq $false)
 	{
 		CreateFile $ConfigurationPath
@@ -47,6 +52,7 @@ function SetDefaultXmlConfiguration()
 
 function GetXMLValue([string]$configPath, [string]$key)
 {
+	CreateFileIfNotExists $configPath
 	$result=Get-XmlConfiguration $configPath $key
     return $result
 }
@@ -77,6 +83,7 @@ function SetXmlValue([string] $configPath, [string] $key, [string]$value, [strin
 	if ($configPath -ne "")
 	{
 		Write-Verbose $configPath
+		CreateFileIfNotExists $configPath
 		[xml]$file = Get-Content -Path $configPath
 		$x=$file.SelectSingleNode("/Configuration/conf[@key='$key']")
 		if ($x -ne $null)
