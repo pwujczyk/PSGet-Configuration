@@ -19,7 +19,7 @@ function GetConfiguration()
 function Get-Configuration()
 {
 	[cmdletbinding()]
-	param ([string]$Key)
+	param ([string]$Key, [switch]$All)
 		
 	$configuration=GetConfiguration
 	Write-Verbose $configuration

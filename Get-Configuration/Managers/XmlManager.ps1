@@ -47,9 +47,35 @@ function SetDefaultXmlConfiguration()
 
 function GetXMLValue([string]$configPath, [string]$key)
 {
-	$result=Get-XmlConfiguration $configPath $key
-    return $result
+	if ($key -eq "")
+	{
+		$result=Get-XmlConfigurationAll $configPath 
+	}
+	else
+	{
+		$result=Get-XmlConfiguration $configPath $key
+	}
+	return $result
 }
+
+function Get-XmlConfigurationAll([string] $configPath)
+{
+	Write-Verbose $configPath
+	Write-Verbose $configPath
+	[xml]$file =Get-Content -Path $configPath
+	$configList= $file.SelectNodes("/Configuration/conf")
+	
+	$objectList=@()
+	foreach ($item in $configList) {
+		$object = New-Object –TypeName PSObject
+		$object | Add-Member –MemberType NoteProperty –Name Key –Value $item.Key
+		$object | Add-Member –MemberType NoteProperty –Name Value –Value $item.Value
+		$object | Add-Member –MemberType NoteProperty –Name Category –Value $item.Category
+		$objectList+=$object
+	}
+	return $objectList
+}
+
 function Get-XmlConfiguration([string] $configPath, [string] $key)
 {
 	if ($configPath -ne "")

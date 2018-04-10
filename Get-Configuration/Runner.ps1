@@ -1,9 +1,9 @@
 clear
 Write-Host "pawel"
 Import-Module D:\GitHub\PSGet-Configuration\Get-Configuration\Get-Configuration.psm1 -Force
-Set-SqlConfigurationSource -SqlServerInstance ".\sql2017" -SqlServerDatabase "testdb" -SqlServerSchema "adm" -SqlServerTable "config" -Verbose
+#Set-SqlConfigurationSource -SqlServerInstance ".\sql2017" -SqlServerDatabase "testdb" -SqlServerSchema "adm" -SqlServerTable "config" -Verbose
 Set-Configuration -Key "ke" -Value v -Verbose
-Get-Configuration -Key "ke" -verbose
+Get-Configuration 
 
 #cd $PSScriptRoot
 Import-Module D:\GitHub\PSSQLCommands\PSSQLCommands\SQLCommands.psm1 -Force
