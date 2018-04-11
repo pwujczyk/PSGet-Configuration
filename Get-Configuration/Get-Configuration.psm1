@@ -136,9 +136,16 @@ function Clear-Configuration()
 	}
 }
 
+function Get-ConfigurationSource()
+{
+	$path=GetConfiguration
+	return $path
+}
+
 Export-ModuleMember Get-Configuration
 Export-ModuleMember Set-Configuration
 Export-ModuleMember Set-ConfigurationSqlSource
 Export-ModuleMember Set-ConfigurationXmlSource
 Export-ModuleMember Get-ConfigurationSource
 Export-ModuleMember Clear-Configuration
+Export-ModuleMember Get-ConfigurationSource
