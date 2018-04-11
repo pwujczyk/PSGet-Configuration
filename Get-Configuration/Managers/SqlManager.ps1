@@ -21,7 +21,7 @@ function CheckAndCreateTable([string]$SqlServerInstance,[string]$SqlServerDataba
 	}
 }
 
-function Set-SqlConfigurationSource()
+function Set-ConfigurationSqlSource()
 {
     [cmdletbinding()]
 	param ([string]$SqlServerInstance,[string]$SqlServerDatabase,[string]$SqlServerSchema="dbo",[string]$SqlServerTable)

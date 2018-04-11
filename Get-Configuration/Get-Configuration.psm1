@@ -138,7 +138,7 @@ function Clear-Configuration()
 
 Export-ModuleMember Get-Configuration
 Export-ModuleMember Set-Configuration
-Export-ModuleMember Set-SqlConfigurationSource
-Export-ModuleMember Set-XmlConfigurationSource
+Export-ModuleMember Set-ConfigurationSqlSource
+Export-ModuleMember Set-ConfigurationXmlSource
 Export-ModuleMember Get-ConfigurationSource
 Export-ModuleMember Clear-Configuration

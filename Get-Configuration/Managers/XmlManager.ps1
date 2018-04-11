@@ -18,7 +18,7 @@ function GetDefaultConfigurationPath()
 	return $dir
 }
 
-function Set-XmlConfigurationSource()
+function Set-ConfigurationXmlSource()
 {
     [cmdletbinding()]
 	param ([string]$ConfigurationPath)
@@ -47,7 +47,7 @@ function CreateFileIfNotExists($ConfigurationPath)
 
 function SetDefaultXmlConfiguration()
 {
-	 Set-XmlConfigurationSource $(GetDefaultConfigurationPath)	
+	 Set-ConfigurationXmlSource $(GetDefaultConfigurationPath)	
 }
 
 function GetXMLValue([string]$configPath, [string]$key)
