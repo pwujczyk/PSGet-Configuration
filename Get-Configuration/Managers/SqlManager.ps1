@@ -26,6 +26,7 @@ function Set-SqlConfigurationSource()
     [cmdletbinding()]
 	param ([string]$SqlServerInstance,[string]$SqlServerDatabase,[string]$SqlServerSchema="dbo",[string]$SqlServerTable)
 
+	CheckAndCreateTable -SqlServerInstance $SqlServerInstance -SqlServerDatabase $SqlServerDatabase -SqlServerSchema $SqlServerSchema -SqlServerTable $SqlServerTable
 
 	$Object = New-Object PSObject                                       
     $Object | add-member Noteproperty Mode       "SQL"                 
@@ -64,4 +65,24 @@ function SetSQLValue()
         $query="UPDATE [$SchemaName].[$TableName] SET [Value] ='$Value',[Category]='$category' WHERE [Key]='$Key'"     
         $result=Invoke-SQLQuery -SqlInstance $SqlInstance -DatabaseName $DatabaseName -Query $query	-Verbose:$VerbosePreference
     }
+}
+
+
+function ClearConfigurationByKeySQL()
+{
+	[cmdletbinding()]
+    param ([string]$SqlInstance,[string]$DatabaseName,[string]$SchemaName, [string]$TableName,[string]$Key)
+
+	  $query="DELETE [$SchemaName].[$TableName] WHERE [Key]='$Key'"
+      $result=Invoke-SQLQuery -SqlInstance $SqlInstance -DatabaseName $DatabaseName -Query $query -Verbose:$VerbosePreference
+
+}
+
+function ClearConfigurationByCategorySQL()
+{
+	[cmdletbinding()]
+    param ([string]$SqlInstance,[string]$DatabaseName,[string]$SchemaName, [string]$TableName,[string]$Category)
+
+	  $query="DELETE [$SchemaName].[$TableName] WHERE [Category]='$Category'"
+      $result=Invoke-SQLQuery -SqlInstance $SqlInstance -DatabaseName $DatabaseName -Query $query	-Verbose:$VerbosePreference
 }
