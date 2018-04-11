@@ -52,7 +52,7 @@ function SetDefaultXmlConfiguration()
 
 function GetXMLValue([string]$configPath, [string]$key)
 {
-C	reateFileIfNotExists $configPath
+	CreateFileIfNotExists $configPath
 	if ($key -eq "")
 	{
 		$result=Get-XmlConfigurationAll $configPath 

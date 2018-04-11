@@ -41,14 +41,42 @@ function Set-ConfigurationSqlSource()
     CheckAndCreateTable -SqlServerInstance $SqlServerInstance -SqlServerDatabase $SqlServerDatabase -SqlServerSchema $SqlServerSchema -SqlServerTable $SqlServerTable
 }
 
+function GetSQLConfigurationAll()
+{
+	[cmdletbinding()]
+	param ([string]$SqlInstance,[string]$DatabaseName,[string]$SchemaName,[string]$TableName)
+
+	$query="SELECT [Key], [Value], [Category] FROM [$SchemaName].[$TableName]"
+	$result=Invoke-SQLQuery -SqlInstance $SqlInstance -DatabaseName $DatabaseName -Query $query	-Verbose:$VerbosePreference
+	$objectList=@()
+	foreach($item in $result)
+	{
+		$object = New-Object –TypeName PSObject
+		$object | Add-Member –MemberType NoteProperty –Name Key –Value $item.Key
+		$object | Add-Member –MemberType NoteProperty –Name Value –Value $item.Value
+		$object | Add-Member –MemberType NoteProperty –Name Category –Value $item.Category
+		$objectList+=$object
+	}
+	return $objectList
+}
+
 function GetSQLValue()
 {
     [cmdletbinding()]
 	param ([string]$SqlInstance,[string]$DatabaseName,[string]$SchemaName,[string]$TableName,[string]$Key)
 
-    $query="SELECT [Value] FROM [$SchemaName].[$TableName] WHERE [Key]='$Key'"
-    $result=Invoke-SQLQuery -SqlInstance $SqlInstance -DatabaseName $DatabaseName -Query $query	-Verbose:$VerbosePreference
-    return $result;
+	if ($key -eq "")
+	{
+		$result=GetSQLConfigurationAll -SqlInstance $SqlInstance -DatabaseName $DatabaseName -SchemaName $SchemaName -TableName $TableName -Verbose:$VerbosePreference
+	}
+	else
+	{
+	    $query="SELECT [Value] FROM [$SchemaName].[$TableName] WHERE [Key]='$Key'"
+		$queryresult=Invoke-SQLQuery -SqlInstance $SqlInstance -DatabaseName $DatabaseName -Query $query	-Verbose:$VerbosePreference
+		$result=$queryresult.value
+
+	}
+	return $result
 }
 
 function SetSQLValue()

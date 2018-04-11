@@ -6,7 +6,7 @@ Set-Configuration -Key "ke" -Value v -Verbose
 Set-Configuration -key "pawel0" -value "pawel0" -Category "c1"
 Set-Configuration -key "pawel1" -value "pawel1" -Category "c1"
 Set-Configuration -key "pawel2" -value "pawel2" -Category "c1"
-Get-Configuration -Key "ke" -verbose
+Get-Configuration 
 Clear-Configuration -Key pawel0
 
 #cd $PSScriptRoot

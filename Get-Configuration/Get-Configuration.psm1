@@ -38,8 +38,8 @@ function Get-Configuration()
 		$SqlServerSchema=$configuration.SqlServerSchema
 		
 	 	$r=GetSQLValue -SqlInstance $SqlServerInstance -DatabaseName $SqlServerDatabase  $SqlServerSchema -TableName $SqlServerTable -Key $Key
-		$value=$r.Value
-       	return $value
+		
+       	return $r
 	}
 }
 
