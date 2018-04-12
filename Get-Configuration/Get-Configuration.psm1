@@ -148,4 +148,3 @@ Export-ModuleMember Set-ConfigurationSqlSource
 Export-ModuleMember Set-ConfigurationXmlSource
 Export-ModuleMember Get-ConfigurationSource
 Export-ModuleMember Clear-Configuration
-Export-ModuleMember Get-ConfigurationSource
