@@ -27,12 +27,12 @@ function Set-ConfigurationXmlSource()
 
 	if ( (Get-Item $ConfigurationPath) -is [System.IO.DirectoryInfo])
 	{
-		$ConfigurationPath=$ConfigurationPath+ $(GetFileName)
+		$ConfigurationPath=Join-Path $ConfigurationPath $(GetFileName)
 	}
 
 	$Object = New-Object PSObject                                       
-    $Object | add-member Noteproperty Mode       "Xml"                 
-    $Object | add-member Noteproperty XmlPath   "$ConfigurationPath"
+     $Object | add-member Noteproperty Mode       "Xml"                 
+     $Object | add-member Noteproperty XmlPath   "$ConfigurationPath"
 	$conf=ConvertTo-Json -InputObject $Object
 	SetConfiguration $conf	
 }

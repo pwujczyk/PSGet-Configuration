@@ -11,8 +11,14 @@ function GetModuleConfigurationJson()
 		SetDefaultXmlConfiguration
 	}
 	
-	$configurationString=Get-ChildItem env:PSGetConfiguration
-	$configuration=ConvertFrom-Json $configurationString.Value
+	$configurationString=GetEnvConfiguration
+	return $configurationString
+}
+
+function GetModuleConfigurationObject()
+{
+	$configurationJson=GetModuleConfigurationJson
+	$configuration=ConvertFrom-Json $configurationJson
 	return $configuration
 }
 
@@ -21,7 +27,7 @@ function Get-Configuration()
 	[cmdletbinding()]
 	param ([string]$Key, [switch]$All)
 		
-	$configuration=GetModuleConfigurationJson
+	$configuration=GetModuleConfigurationObject
 	Write-Verbose $configuration
 	if ($configuration.Mode -eq 'Xml')
 	{
@@ -48,7 +54,7 @@ function Set-Configuration()
 	[cmdletbinding()]
 	param ([string]$Key,[string]$Value,[string]$category)
 		
-	$configuration=GetModuleConfigurationJson
+	$configuration=GetModuleConfigurationObject
 	Write-Verbose $configuration
 	if ($configuration.Mode -eq 'Xml')
 	{
@@ -78,7 +84,7 @@ function ClearConfigurationByKey()
 	[cmdletbinding()]
 	param ([string]$Key)
 	
-	$configuration=GetModuleConfigurationJson
+	$configuration=GetModuleConfigurationObject
 	Write-Verbose $configuration
 	if ($configuration.Mode -eq 'Xml')
 	{
@@ -101,7 +107,7 @@ function ClearConfigurationByCategory()
 	[cmdletbinding()]
 	param ([string]$Category)
 	
-	$configuration=GetModuleConfigurationJson
+	$configuration=GetModuleConfigurationObject
 	Write-Verbose $configuration
 	if ($configuration.Mode -eq 'Xml')
 	{
@@ -138,8 +144,14 @@ function Clear-Configuration()
 
 function Get-ConfigurationSource()
 {
-	$path=GetConfiguration
-	return $path
+	$json=GetModuleConfigurationObject
+	return $json
+}
+
+function Get-ConfigurationSourceJson()
+{
+	$json=GetModuleConfigurationJson
+	return $json
 }
 
 Export-ModuleMember Get-Configuration
@@ -147,4 +159,5 @@ Export-ModuleMember Set-Configuration
 Export-ModuleMember Set-ConfigurationSqlSource
 Export-ModuleMember Set-ConfigurationXmlSource
 Export-ModuleMember Get-ConfigurationSource
+Export-ModuleMember Get-ConfigurationSourceJson
 Export-ModuleMember Clear-Configuration

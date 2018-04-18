@@ -3,7 +3,7 @@ function SetConfiguration([string]$configuration)
     $env:PSGetConfiguration=$configuration
 }
 
-function GetConfiguration()
+function GetEnvConfiguration()
 {
 	return $env:PSGetConfiguration
 }

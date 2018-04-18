@@ -1,6 +1,8 @@
 clear
 Write-Host "pawel"
 Import-Module D:\GitHub\PSGet-Configuration\Get-Configuration\Get-Configuration.psm1 -Force
+Get-ConfigurationSource
+Write-Host "fdsa"
 #Set-ConfigurationSqlSource -SqlServerInstance ".\sql2017" -SqlServerDatabase "testdb" -SqlServerSchema "adm" -SqlServerTable "config" -Verbose
 Set-Configuration -Key "ke" -Value v -Verbose
 Set-Configuration -key "pawel0" -value "pawel0" -Category "c1"
