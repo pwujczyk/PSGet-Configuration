@@ -1,0 +1,5 @@
+<Configuration>
+  <conf key="ExampleKey" value="ExampleValue" category="ExampleCategory" />
+  <conf key="SelectSqlVeiwDatabaseName" value="PawelDT" category="" />
+  <conf key="SelectSqlViewServerNameKey" value=".\SQL2017" category="" />
+</Configuration>

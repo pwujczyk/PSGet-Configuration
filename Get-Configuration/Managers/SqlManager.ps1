@@ -16,7 +16,7 @@ function CheckAndCreateTable([string]$SqlServerInstance,[string]$SqlServerDataba
 			New-SQLTable -SqlInstance $SqlServerInstance -DatabaseName $SqlServerDatabase -SchemaName $SqlServerSchema -TableName $SqlServerTable
 			New-SqlColumn -SqlInstance $SqlServerInstance -DatabaseName $SqlServerDatabase -SchemaName $SqlServerSchema -TableName $SqlServerTable -ColumnName "Key" -Type "VARCHAR(100)"
 			New-SqlColumn -SqlInstance $SqlServerInstance -DatabaseName $SqlServerDatabase -SchemaName $SqlServerSchema -TableName $SqlServerTable -ColumnName "Value" -Type "VARCHAR(1000)"
-			New-SqlColumn -SqlInstance $SqlServerInstance -DatabaseName $SqlServerDatabase -SchemaName $SqlServerSchema -TableName $SqlServerTable -ColumnName "Category" -Type "VARCHAR(1000)"
+			New-SqlColumn -SqlInstance $SqlServerInstance -DatabaseName $SqlServerDatabase -SchemaName $SqlServerSchema -TableName $SqlServerTable -ColumnName "Category" -Type "VARCHAR(100)"
 		}
 	}
 }
